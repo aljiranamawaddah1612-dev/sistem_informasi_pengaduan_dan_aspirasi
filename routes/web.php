@@ -29,10 +29,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/export-pdf', [DashboardController::class, 'exportPdf'])->name('dashboard.exportPdf');
     Route::get('/notifikasi/{id}/read', [DashboardController::class, 'readNotification'])->name('notifikasi.read');
 
-    // Laporan
-    Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
-    Route::get('/laporan/export-pdf', [LaporanController::class, 'exportPdf'])->name('laporan.exportPdf');
-    Route::get('/laporan/export-excel', [LaporanController::class, 'exportExcel'])->name('laporan.exportExcel');
+    // Laporan (Admin & Petugas)
+    Route::middleware('role:admin,petugas')->group(function () {
+        Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+        Route::get('/laporan/export-pdf', [LaporanController::class, 'exportPdf'])->name('laporan.exportPdf');
+        Route::get('/laporan/export-excel', [LaporanController::class, 'exportExcel'])->name('laporan.exportExcel');
+    });
 
     // Profile Management
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
@@ -41,7 +43,11 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/user', UserController::class)->middleware('role:admin');
     Route::resource('/kategori', KategoriController::class)->middleware('role:admin');
-    Route::resource('/pengaduan', PengaduanController::class);
+    
+    // Pengaduan
+    Route::resource('/pengaduan', PengaduanController::class)->except(['store']);
+    Route::post('/pengaduan', [PengaduanController::class, 'store'])->name('pengaduan.store')->middleware('throttle:pengaduan');
+    
     Route::resource('/aspirasi', AspirasiController::class);
     Route::post('/tanggapan', [TanggapanController::class, 'store'])->name('tanggapan.store');
 

@@ -11,7 +11,7 @@
         @endif
 
         <div class="table-responsive">
-            <table class="table table-bordered table-striped w-100" id="data-table">
+            <table class="table table-bordered table-striped w-100 datatable" id="data-table">
                 <thead>
                     <tr>
                         <th scope="col">#</th>

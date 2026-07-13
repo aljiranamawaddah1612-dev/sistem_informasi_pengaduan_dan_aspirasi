@@ -51,7 +51,7 @@
 
     <div class="card shadow-lg p-3">
         <div class="table-responsive">
-            <table class="table table-bordered table-striped w-100">
+            <table class="table table-bordered table-striped w-100 datatable">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
