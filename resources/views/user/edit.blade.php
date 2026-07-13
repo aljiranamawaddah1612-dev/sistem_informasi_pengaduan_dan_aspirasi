@@ -24,6 +24,17 @@
 
                 <div class="col-md-9">
                     <div class="mb-3">
+                        <label for="nik" class="form-label required">NIK</label>
+                        <input class="form-control @error('nik') is-invalid  @enderror" type="text" id="nik"
+                            name="nik" required value="{{ old('nik', $user->nik) }}" maxlength="16">
+                        @error('nik')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
                         <label for="name" class="form-label required">Nama</label>
                         <input class="form-control @error('name') is-invalid  @enderror" type="text" id="name"
                             name="name" required value="{{ old('name', $user->name) }}">
@@ -39,6 +50,17 @@
                         <input class="form-control @error('email') is-invalid  @enderror" type="email" id="email"
                             name="email" required value="{{ old('email', $user->email) }}">
                         @error('email')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="telp" class="form-label">No Telp</label>
+                        <input class="form-control @error('telp') is-invalid  @enderror" type="text" id="telp"
+                            name="telp" value="{{ old('telp', $user->telp) }}">
+                        @error('telp')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
@@ -72,8 +94,9 @@
                         <select class="form-select select2-default @error('role') is-invalid  @enderror" id="role"
                             name="role" required>
                             <option value="">Pilih Role</option>
-                            <option value="Superadmin" @selected(old('role', $user->role) == 'Superadmin')>Superadmin</option>
-                            <option value="Admin" @selected(old('role', $user->role) == 'Admin')>Admin</option>
+                            <option value="admin" @selected(old('role', $user->role) == 'admin')>Admin</option>
+                            <option value="petugas" @selected(old('role', $user->role) == 'petugas')>Petugas</option>
+                            <option value="masyarakat" @selected(old('role', $user->role) == 'masyarakat')>Masyarakat</option>
                         </select>
                         @error('role')
                             <div class="invalid-feedback">

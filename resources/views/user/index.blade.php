@@ -15,6 +15,7 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">NIK</th>
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
                         <th scope="col">Role</th>
@@ -25,9 +26,10 @@
                     @foreach ($users as $user)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
+                            <td>{{ $user->nik ?? '-' }}</td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
-                            <td>{{ $user->role }}</td>
+                            <td>{{ ucfirst($user->role) }}</td>
                             <td>
                                 <button type="button" class="btn btn-info btn-sm btn-detail"
                                     data-route="{{ route('user.show', $user) }}">

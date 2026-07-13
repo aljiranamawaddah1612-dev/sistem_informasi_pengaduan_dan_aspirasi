@@ -12,6 +12,26 @@
             <div class="list-group-item px-0 border-0">
                 <div class="row">
                     <div class="col-4 text-muted">
+                        <i class='bx bx-id-card me-2'></i>NIK
+                    </div>
+                    <div class="col-8 fw-semibold">
+                        {{ $user->nik ?? '-' }}
+                    </div>
+                </div>
+            </div>
+            <div class="list-group-item px-0 border-0">
+                <div class="row">
+                    <div class="col-4 text-muted">
+                        <i class='bx bx-phone me-2'></i>No Telp
+                    </div>
+                    <div class="col-8 fw-semibold">
+                        {{ $user->telp ?? '-' }}
+                    </div>
+                </div>
+            </div>
+            <div class="list-group-item px-0 border-0">
+                <div class="row">
+                    <div class="col-4 text-muted">
                         <i class='bx bx-envelope me-2'></i>Email
                     </div>
                     <div class="col-8 fw-semibold">

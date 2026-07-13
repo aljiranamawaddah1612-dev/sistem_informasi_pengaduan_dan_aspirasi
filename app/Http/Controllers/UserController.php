@@ -37,15 +37,21 @@ class UserController extends Controller
     {
 
         $validate = $request->validate([
+            'nik' => 'required|string|size:16|unique:users,nik',
             'name' => 'required',
-            'role' => 'required',
+            'email' => 'required|email|lowercase|unique:users,email',
+            'telp' => 'nullable|string',
+            'role' => 'required|in:admin,petugas,masyarakat',
             'password' => 'required|min:8',
             'passwordconfirm' => 'required|same:password',
-            'email' => 'required|email|lowercase|unique:users,email',
             'avatar' => 'nullable|image|mimes:png,jpg,jpeg,svg|max:512'
         ], [
+            'nik.required' => 'NIK wajib diisi',
+            'nik.size' => 'NIK harus 16 digit',
+            'nik.unique' => 'NIK sudah terdaftar',
             'name.required' => 'Nama wajib diisi',
             'role.required' => 'Role wajib diisi',
+            'role.in' => 'Role tidak valid',
             'password.required' => 'Password wajib diisi',
             'password.min' => 'Password minimal 8 karakter',
             'passwordconfirm.required' => 'Konfirmasi password wajib diisi',
@@ -107,15 +113,21 @@ class UserController extends Controller
     {
 
         $validate = $request->validate([
+            'nik' => 'required|string|size:16|unique:users,nik,' . $user->id,
             'name' => 'required',
-            'role' => 'required',
+            'email' => 'required|email|lowercase|unique:users,email,' . $user->id,
+            'telp' => 'nullable|string',
+            'role' => 'required|in:admin,petugas,masyarakat',
             'password' => 'nullable|min:8',
             'passwordconfirm' => 'nullable|same:password',
-            'email' => 'required|email|lowercase|unique:users,email,' . $user->id,
             'avatar' => 'nullable|image|mimes:png,jpg,jpeg,svg|max:512'
         ], [
+            'nik.required' => 'NIK wajib diisi',
+            'nik.size' => 'NIK harus 16 digit',
+            'nik.unique' => 'NIK sudah terdaftar',
             'name.required' => 'Nama wajib diisi',
             'role.required' => 'Role wajib diisi',
+            'role.in' => 'Role tidak valid',
             'password.min' => 'Password minimal 8 karakter',
             'passwordconfirm.same' => 'Konfirmasi password tidak cocok',
             'email.required' => 'Email wajib diisi',

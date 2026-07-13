@@ -15,14 +15,25 @@ class UserSeeder extends Seeder
     {
         $users = [
             [
-                'name' => 'Tamus Tahir',
-                'email' => 'tamus@gmail.com',
-                'role' => 'Superadmin',
+                'nik' => '1234567890123456',
+                'name' => 'Admin Sistem',
+                'email' => 'admin@gmail.com',
+                'telp' => '081234567890',
+                'role' => 'admin',
             ],
             [
-                'name' => 'Joh Doe',
-                'email' => 'admin@gmail.com',
-                'role' => 'Admin',
+                'nik' => '2345678901234567',
+                'name' => 'Petugas Lapangan',
+                'email' => 'petugas@gmail.com',
+                'telp' => '082345678901',
+                'role' => 'petugas',
+            ],
+            [
+                'nik' => '3456789012345678',
+                'name' => 'Masyarakat Umum',
+                'email' => 'masyarakat@gmail.com',
+                'telp' => '083456789012',
+                'role' => 'masyarakat',
             ],
         ];
 
@@ -32,8 +43,10 @@ class UserSeeder extends Seeder
             }
 
             User::factory()->create([
+                'nik' => $user['nik'],
                 'name' => $user['name'],
                 'email' => $user['email'],
+                'telp' => $user['telp'],
                 'role' => $user['role'],
             ]);
         }
