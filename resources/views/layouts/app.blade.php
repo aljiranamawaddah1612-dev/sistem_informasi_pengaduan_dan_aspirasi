@@ -284,12 +284,19 @@
                 </a>
             </li>
 
-            @if (Auth::user()->role == 'Superadmin')
+            @if (Auth::user()->role == 'admin')
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('user.*') ? '' : 'collapsed' }}"
                         href="{{ route('user.index') }}">
                         <i class='bx bx-user-pin'></i>
                         <span>User</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('kategori.*') ? '' : 'collapsed' }}"
+                        href="{{ route('kategori.index') }}">
+                        <i class='bx bx-category'></i>
+                        <span>Kategori</span>
                     </a>
                 </li>
             @endif
