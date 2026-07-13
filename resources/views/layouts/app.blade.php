@@ -205,6 +205,52 @@
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
 
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-bell"></i>
+                        @if(Auth::user()->unreadNotifications->count() > 0)
+                        <span class="badge bg-primary badge-number">{{ Auth::user()->unreadNotifications->count() }}</span>
+                        @endif
+                    </a><!-- End Notification Icon -->
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+                        <li class="dropdown-header">
+                            You have {{ Auth::user()->unreadNotifications->count() }} new notifications
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        @foreach(Auth::user()->unreadNotifications->take(5) as $notification)
+                        <li class="notification-item">
+                            <i class="bi bi-info-circle text-primary"></i>
+                            <div>
+                                <h4><a href="{{ route('notifikasi.read', $notification->id) }}" class="text-dark">{{ $notification->data['judul_laporan'] ?? 'Pengaduan' }}</a></h4>
+                                <p>{{ $notification->data['message'] }}</p>
+                                <p>{{ $notification->created_at->diffForHumans() }}</p>
+                            </div>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        @endforeach
+
+                        @if(Auth::user()->unreadNotifications->count() == 0)
+                        <li class="notification-item">
+                            <div>
+                                <p>No new notifications</p>
+                            </div>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        @endif
+
+                    </ul><!-- End Notification Dropdown Items -->
+
+                </li><!-- End Notification Nav -->
+
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"

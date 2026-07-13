@@ -149,4 +149,16 @@ class DashboardController extends Controller
             return to_route('dashboard.edit')->withError('Gagal mengubah data: ' . $e->getMessage());
         }
     }
+
+    public function readNotification($id)
+    {
+        $notification = Auth::user()->notifications()->findOrFail($id);
+        $notification->markAsRead();
+        
+        if (isset($notification->data['pengaduan_id'])) {
+            return to_route('pengaduan.show', $notification->data['pengaduan_id']);
+        }
+        
+        return back();
+    }
 }

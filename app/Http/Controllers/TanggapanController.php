@@ -7,6 +7,7 @@ use App\Models\Pengaduan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\StatusPengaduanUpdated;
 
 class TanggapanController extends Controller
 {
@@ -43,6 +44,9 @@ class TanggapanController extends Controller
             // Update Pengaduan status
             $pengaduan = Pengaduan::find($validate['pengaduan_id']);
             $pengaduan->update(['status' => $validate['status']]);
+
+            // Notify User
+            $pengaduan->user->notify(new StatusPengaduanUpdated($pengaduan));
 
             DB::commit();
             return back()->withSuccess('Tanggapan berhasil dikirim dan status diperbarui');

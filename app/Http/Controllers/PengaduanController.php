@@ -7,6 +7,9 @@ use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
+use App\Models\User;
+use App\Notifications\LaporanBaruMasuk;
 
 class PengaduanController extends Controller
 {
@@ -78,7 +81,11 @@ class PengaduanController extends Controller
                 $validate['foto_lampiran'] = $request->file('foto_lampiran')->store('pengaduan', 'public');
             }
 
-            Pengaduan::create($validate);
+            $pengaduan = Pengaduan::create($validate);
+
+            // Notify Admin and Petugas
+            $adminsAndPetugas = User::whereIn('role', ['admin', 'petugas'])->get();
+            Notification::send($adminsAndPetugas, new LaporanBaruMasuk($pengaduan));
 
             DB::commit();
             return to_route('pengaduan.index')->withSuccess('Pengaduan berhasil dikirim');
