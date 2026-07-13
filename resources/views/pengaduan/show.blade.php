@@ -4,7 +4,7 @@
 
     <div class="row">
         <div class="col-md-8">
-            <div class="card shadow-lg p-4">
+            <div class="card shadow-lg p-4 mb-4">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="fw-bold mb-0">{{ $pengaduan->judul_laporan }}</h4>
                     <div>
@@ -29,12 +29,66 @@
                 <div class="mb-4">
                     <p style="white-space: pre-wrap;">{{ $pengaduan->isi_laporan }}</p>
                 </div>
+            </div>
 
-                <div class="mt-4">
-                    <a href="{{ route('pengaduan.index') }}" class="btn btn-secondary">
-                        <i class='bx bx-arrow-back'></i> Kembali
-                    </a>
+            <!-- Menampilkan Daftar Tanggapan -->
+            <h5 class="fw-bold mb-3"><i class='bx bx-chat'></i> Tindak Lanjut / Tanggapan</h5>
+            
+            @forelse($pengaduan->tanggapans as $tanggapan)
+            <div class="card shadow-sm mb-3 border-start border-4 border-primary">
+                <div class="card-body py-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="fw-bold text-primary">{{ $tanggapan->user->name }} ({{ $tanggapan->user->role }})</span>
+                        <small class="text-muted">{{ \Carbon\Carbon::parse($tanggapan->tgl_tanggapan)->format('d M Y') }}</small>
+                    </div>
+                    <p class="mb-0" style="white-space: pre-wrap;">{{ $tanggapan->tanggapan }}</p>
                 </div>
+            </div>
+            @empty
+            <div class="alert alert-secondary">
+                Belum ada tanggapan.
+            </div>
+            @endforelse
+
+            <!-- Form Tanggapan untuk Admin/Petugas -->
+            @if(Auth::user()->role != 'masyarakat')
+            <div class="card shadow-lg p-4 mt-4 bg-light">
+                <h6 class="fw-bold mb-3">Berikan Tanggapan & Update Status</h6>
+                <form action="{{ route('tanggapan.store') }}" method="POST" class="form">
+                    @csrf
+                    <input type="hidden" name="pengaduan_id" value="{{ $pengaduan->id }}">
+
+                    <div class="mb-3">
+                        <label for="status" class="form-label required">Ubah Status Laporan</label>
+                        <select class="form-select @error('status') is-invalid @enderror" name="status" id="status" required>
+                            <option value="proses" @selected($pengaduan->status == 'proses')>Diproses</option>
+                            <option value="selesai" @selected($pengaduan->status == 'selesai')>Selesai</option>
+                            <option value="ditolak" @selected($pengaduan->status == 'ditolak')>Ditolak</option>
+                        </select>
+                        @error('status')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tanggapan" class="form-label required">Isi Tanggapan</label>
+                        <textarea name="tanggapan" id="tanggapan" rows="4" class="form-control @error('tanggapan') is-invalid @enderror" required>{{ old('tanggapan') }}</textarea>
+                        @error('tanggapan')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary">Kirim Tanggapan</button>
+                    </div>
+                </form>
+            </div>
+            @endif
+
+            <div class="mt-4">
+                <a href="{{ route('pengaduan.index') }}" class="btn btn-secondary">
+                    <i class='bx bx-arrow-back'></i> Kembali
+                </a>
             </div>
         </div>
         <div class="col-md-4">

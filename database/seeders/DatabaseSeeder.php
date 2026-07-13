@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             SettingSeeder::class,
             KategoriSeeder::class,
             PengaduanSeeder::class,
+            TanggapanSeeder::class,
+            AspirasiSeeder::class,
         ]);
     }
 }

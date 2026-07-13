@@ -292,6 +292,14 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('aspirasi.*') ? '' : 'collapsed' }}"
+                    href="{{ route('aspirasi.index') }}">
+                    <i class='bx bx-bulb'></i>
+                    <span>Aspirasi & Ide</span>
+                </a>
+            </li>
+
             @if (Auth::user()->role == 'admin')
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('user.*') ? '' : 'collapsed' }}"
