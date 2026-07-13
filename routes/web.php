@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\PengaduanController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,6 +28,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/user', UserController::class)->middleware('role:admin');
     Route::resource('/kategori', KategoriController::class)->middleware('role:admin');
+    Route::resource('/pengaduan', PengaduanController::class);
 
     Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
     Route::put('/setting/{setting}/update', [SettingController::class, 'update'])->name('setting.update');

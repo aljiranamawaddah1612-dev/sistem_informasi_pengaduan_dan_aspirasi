@@ -284,6 +284,14 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('pengaduan.*') ? '' : 'collapsed' }}"
+                    href="{{ route('pengaduan.index') }}">
+                    <i class='bx bx-message-square-detail'></i>
+                    <span>Pengaduan</span>
+                </a>
+            </li>
+
             @if (Auth::user()->role == 'admin')
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('user.*') ? '' : 'collapsed' }}"
