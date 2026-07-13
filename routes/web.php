@@ -24,6 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/switch-user', [LoginController::class, 'switchUser'])->name('login.switch_user');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('/dashboard/export-pdf', [DashboardController::class, 'exportPdf'])->name('dashboard.exportPdf');
     Route::get('/dashboard/show', [DashboardController::class, 'show'])->name('dashboard.show');
     Route::get('/dashboard/edit', [DashboardController::class, 'edit'])->name('dashboard.edit');
     Route::put('/dashboard/update', [DashboardController::class, 'update'])->name('dashboard.update');
