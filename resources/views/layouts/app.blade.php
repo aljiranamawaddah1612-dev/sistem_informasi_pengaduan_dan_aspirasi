@@ -346,6 +346,16 @@
                 </a>
             </li>
 
+            @if (Auth::user()->role != 'masyarakat')
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('laporan.*') ? '' : 'collapsed' }}"
+                    href="{{ route('laporan.index') }}">
+                    <i class='bx bx-printer'></i>
+                    <span>Cetak Laporan</span>
+                </a>
+            </li>
+            @endif
+
             @if (Auth::user()->role == 'admin')
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('user.*') ? '' : 'collapsed' }}"
