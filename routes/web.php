@@ -9,6 +9,7 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\TanggapanController;
 use App\Http\Controllers\AspirasiController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,10 +26,12 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('/dashboard/export-pdf', [DashboardController::class, 'exportPdf'])->name('dashboard.exportPdf');
-    Route::get('/dashboard/show', [DashboardController::class, 'show'])->name('dashboard.show');
     Route::get('/notifikasi/{id}/read', [DashboardController::class, 'readNotification'])->name('notifikasi.read');
-    Route::get('/dashboard/edit', [DashboardController::class, 'edit'])->name('dashboard.edit');
-    Route::put('/dashboard/update', [DashboardController::class, 'update'])->name('dashboard.update');
+
+    // Profile Management
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::put('/profile/update', [ProfileController::class, 'updateProfile'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
 
     Route::resource('/user', UserController::class)->middleware('role:admin');
     Route::resource('/kategori', KategoriController::class)->middleware('role:admin');
