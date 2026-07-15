@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\Models\Setting;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Http\Request;

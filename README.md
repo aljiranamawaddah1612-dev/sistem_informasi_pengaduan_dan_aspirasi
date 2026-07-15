@@ -1,60 +1,28 @@
-# Admin Template (Laravel 13 + Tailwind 4)
+# Aplikasi Sistem Informasi Pengaduan dan Aspirasi (SIPA)
 
-A professional and modern administrative dashboard template built with **Laravel 13** and **Bootstrap 5 (NiceAdmin Template)**. This project provides a solid foundation for building robust back-office applications with built-in user management, settings, and profile features.
+Platform terpusat yang memudahkan masyarakat untuk menyampaikan keluhan, laporan masalah, serta saran (aspirasi) kepada pihak instansi atau pemerintah secara transparan, aman, dan mudah dilacak proses penyelesaiannya.
 
 ## 🚀 Fitur Utama
 
-- **Otentikasi & Keamanan**: Login, Logout, dan Middleware Role (Superadmin).
-- **Manajemen User**: CRUD (Create, Read, Update, Delete) data pengguna lengkap dengan foto profil (avatar).
-- **Manajemen Profil**: Halaman profil untuk setiap pengguna (Dashboard Show & Edit).
-- **Pengaturan Aplikasi**: Pengaturan nama aplikasi, logo, kata kunci, dan deskripsi SEO melalui dashboard.
-- **UI/UX Modern**: Menggunakan template NiceAdmin dengan integrasi:
-    - **DataTables**: Untuk tabel data yang interaktif.
-    - **SweetAlert2**: Untuk notifikasi yang cantik.
-    - **Select2**: Untuk dropdown yang lebih baik.
-    - **TinyMCE**: Untuk editor teks kaya.
-- **Ekspor Laporan**: Dukungan ekspor data ke format PDF (menggunakan `laravel-dompdf`).
-- **Lokalisasi**: Sudah dikonfigurasi menggunakan Bahasa Indonesia (`id`).
+- **Autentikasi & Manajemen Akun**: Registrasi dengan validasi NIK (Nomor Induk Kependudukan), login, dan manajemen profil pengguna berdasarkan Role (Masyarakat, Petugas, Admin).
+- **Manajemen Pengaduan (Ticketing)**: Form pelaporan dilengkapi dengan bukti foto, deskripsi, lokasi, dan kategori masalah. Pengguna mendapatkan nomor tiket pelacakan.
+- **Manajemen Aspirasi**: Form khusus untuk menampung ide dan saran pembangunan dari publik.
+- **Tracking & Notifikasi Status**: Status pengaduan (Menunggu, Diproses, Selesai, Ditolak) yang ter-update secara real-time.
+- **Tanggapan Petugas**: Fitur bagi petugas untuk membalas laporan secara langsung di thread pengaduan.
+- **Dashboard & Laporan (Reporting)**: Visualisasi data (chart/grafik) jumlah laporan per kategori, laporan bulan ini, serta fitur export laporan (PDF/Excel) untuk rapat evaluasi.
 
-## 🎨 Kustomisasi Tema (Warna)
+## 👥 Target Pengguna
 
-Template ini telah dimodifikasi agar warna tema utamanya sangat mudah diganti. Anda hanya perlu mengubah **CSS Variables** di satu tempat saja, dan seluruh elemen (Header, Footer, Tombol Primary, Sidebar Aktif, dll.) akan otomatis menyesuaikan.
-
-1. Buka file `resources/views/layouts/app.blade.php`.
-2. Cari bagian `<style>` di dalam tag `<head>`.
-3. Ubah kode Hex warna pada blok `:root`:
-
-```css
-:root {
-    /* ====== UBAH WARNA TEMA DI SINI ====== */
-    --theme-bg: #7c3aed;    /* Warna utama tema (contoh: Ungu/Biru) */
-    --theme-hover: #6d28d9; /* Warna lebih gelap untuk efek hover tombol/menu */
-    --theme-text: #ffffff;  /* Warna teks di atas warna utama */
-    
-    --main-bg: #f6f9ff;     /* Warna background utama halaman konten */
-    /* ===================================== */
-}
-```
-4. Simpan file, lalu muat ulang (refresh) halaman pada browser Anda.
-
-## 🔑 Kredensial Default
-
-Setelah menjalankan seeder, Anda dapat login menggunakan akun berikut:
-
-| Nama        | Email             | Password   | Role       |
-| ----------- | ----------------- | ---------- | ---------- |
-| Tamus Tahir | `tamus@gmail.com` | `password` | Superadmin |
-| Joh Doe     | `admin@gmail.com` | `password` | Admin      |
+- **Masyarakat (Pelapor)**: Warga yang ingin menyampaikan keluhan atau memberikan saran aspirasi.
+- **Petugas (Verifikator/Responder)**: Tim internal instansi yang bertugas memverifikasi laporan masuk, meninjau lapangan, dan memberikan tanggapan resmi.
+- **Admin / Pimpinan**: Mengelola seluruh data pengguna, kategori, serta memantau statistik penyelesaian pengaduan.
 
 ## 🛠️ Stack Teknologi
 
-- **Backend**: PHP 8.3 & Laravel 13.0
-- **Frontend**: Bootstrap 5
-- **Database**: SQLite (default)
-- **Library Penting**:
-    - `barryvdh/laravel-dompdf`
-    - `laravel/tinker`
-    - `pestphp/pest` (Testing)
+- **Backend**: PHP 8.2+ & Laravel 11
+- **Frontend**: Blade Template Engine, Bootstrap 5 (NiceAdmin Template)
+- **Database**: MySQL / SQLite
+- **Autentikasi & Keamanan**: Built-in Laravel Auth, CSRF Protection, Password Hashing (Bcrypt)
 
 ## 💻 Instalasi Lokal
 
@@ -64,7 +32,7 @@ Ikuti langkah-langkah berikut untuk menjalankan proyek di mesin lokal Anda:
 
     ```bash
     git clone <repository-url>
-    cd admin-template
+    cd uas
     ```
 
 2. **Instal Dependensi PHP**:
@@ -80,7 +48,7 @@ Ikuti langkah-langkah berikut untuk menjalankan proyek di mesin lokal Anda:
     ```
 
 4. **Konfigurasi Lingkungan**:
-   Salin file `.env.example` menjadi `.env` dan generate key:
+   Salin file `.env.example` menjadi `.env` dan generate key. Konfigurasi database jika menggunakan MySQL, atau biarkan default untuk SQLite:
 
     ```bash
     cp .env.example .env
@@ -96,21 +64,13 @@ Ikuti langkah-langkah berikut untuk menjalankan proyek di mesin lokal Anda:
     ```
 
 6. **Jalankan Aplikasi**:
-   Anda dapat menggunakan script setup yang sudah disediakan atau menjalankan server secara manual:
+   Jalankan server pengembangan Laravel dan proses build Vite:
 
     ```bash
-    # Menggunakan script internal
-    composer run dev
-
-    # ATAU menjalankan secara terpisah
     php artisan serve
+    # Buka tab terminal baru:
     npm run dev
     ```
-
-## 📝 Script Tambahan
-
-- `composer run setup`: Menjalankan instalasi lengkap (composer, npm, migrate, build).
-- `composer run test`: Menjalankan unit testing menggunakan Pest.
 
 ## 📄 Lisensi
 

@@ -40,11 +40,11 @@
     <style>
         :root {
             /* ====== UBAH WARNA TEMA DI SINI ====== */
-            --theme-bg: #000080;
-            --theme-hover: #020260;
+            --theme-bg: oklch(27.4% 0.072 132.109);
+            --theme-hover: oklch(22% 0.072 132.109);
             /* warna lebih gelap untuk efek hover */
             --theme-text: #ffffff;
-            --main-bg: #eeeeee;
+            --main-bg: #f8fafc;
             /* warna background utama / halaman */
             /* ===================================== */
         }
@@ -346,7 +346,22 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('ulasan.*') ? '' : 'collapsed' }}"
+                    href="{{ route('ulasan.index') }}">
+                    <i class='bx bx-star'></i>
+                    <span>Ulasan Laporan</span>
+                </a>
+            </li>
+
             @if (Auth::user()->role != 'masyarakat')
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('pengumuman.*') ? '' : 'collapsed' }}"
+                    href="{{ route('pengumuman.index') }}">
+                    <i class='bx bx-news'></i>
+                    <span>Pengumuman</span>
+                </a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('laporan.*') ? '' : 'collapsed' }}"
                     href="{{ route('laporan.index') }}">
@@ -354,6 +369,30 @@
                     <span>Cetak Laporan</span>
                 </a>
             </li>
+            @endif
+
+            @if (Auth::user()->role == 'admin')
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('instansi.*') ? '' : 'collapsed' }}"
+                        href="{{ route('instansi.index') }}">
+                        <i class='bx bx-building'></i>
+                        <span>Instansi</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('wilayah.*') ? '' : 'collapsed' }}"
+                        href="{{ route('wilayah.index') }}">
+                        <i class='bx bx-map-alt'></i>
+                        <span>Wilayah</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('faq.*') ? '' : 'collapsed' }}"
+                        href="{{ route('faq.index') }}">
+                        <i class='bx bx-question-mark'></i>
+                        <span>Kelola FAQ</span>
+                    </a>
+                </li>
             @endif
 
             @if (Auth::user()->role == 'admin')

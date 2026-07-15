@@ -11,6 +11,11 @@ use App\Http\Controllers\TanggapanController;
 use App\Http\Controllers\AspirasiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\InstansiController;
+use App\Http\Controllers\WilayahController;
+use App\Http\Controllers\PengumumanController;
+use App\Http\Controllers\FaqController;
+use App\Http\Controllers\UlasanController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -50,6 +55,13 @@ Route::middleware('auth')->group(function () {
     
     Route::resource('/aspirasi', AspirasiController::class);
     Route::post('/tanggapan', [TanggapanController::class, 'store'])->name('tanggapan.store');
+
+    // New tables routes
+    Route::resource('/instansi', InstansiController::class)->middleware('role:admin');
+    Route::resource('/wilayah', WilayahController::class)->middleware('role:admin');
+    Route::resource('/pengumuman', PengumumanController::class)->middleware('role:admin,petugas');
+    Route::resource('/faq', FaqController::class)->middleware('role:admin');
+    Route::resource('/ulasan', UlasanController::class);
 
     Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
     Route::put('/setting/{setting}/update', [SettingController::class, 'update'])->name('setting.update');
